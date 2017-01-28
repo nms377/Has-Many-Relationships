@@ -1,14 +1,15 @@
+
 DROP USER "has_many_user";
 
-CREATE USER "has_many_user";
+CREATE USER "has_many_user" WITH PASSWORD 'password';
 
 DROP DATABASE IF EXISTS "has_many_blogs";
 
 CREATE DATABASE "has_many_blogs" OWNER "has_many_user";
 
-\i scripts/blog_data.sql;
+\c has_many_blogs "has_many_user";
 
-DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
 	id serial NOT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE users(
 	PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS posts;
+-- DROP TABLE IF EXISTS posts;
 
 CREATE TABLE posts(
 	id serial NOT NULL,
@@ -33,7 +34,7 @@ CREATE TABLE posts(
 	PRIMARY KEY (id)
 	);
 
-DROP TABLE IF EXISTS comments;
+-- DROP TABLE IF EXISTS comments;
 
 CREATE TABLE comments(
 	id serial NOT NULL REFERENCES users (id),
@@ -44,5 +45,7 @@ CREATE TABLE comments(
 	posts_id SERIAL REFERENCES posts (id),
 	PRIMARY KEY (id)
 );
+
+\i scripts/blog_data.sql;
 
 SELECT 
